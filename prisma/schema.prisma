@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Game {
+  id                String    @id @default(cuid())
+  name              String
+  slug              String    @unique
+  icon              String // emoji or short icon token
+  imageUrl          String? // card/banner artwork
+  tagline           String
+  status            String    @default("Active") // e.g. "Active", "Inactive"
+  serverName        String? // Minecraft-specific, e.g. "DemonCore MC"
+  serverIp          String? // Minecraft-specific, Java Edition
+  serverPort        String? // Minecraft-specific, Java Edition (optional)
+  serverIpBedrock   String? // Minecraft-specific, Bedrock Edition
+  serverPortBedrock String? // Minecraft-specific, Bedrock Edition
+  order             Int       @default(0)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  creators Creator[]
+}
+
+model Creator {
+  id          String   @id @default(cuid())
+  photoUrl    String?
+  inGameName  String
+  realName    String
+  bio         String?
+  active      Boolean  @default(true)
+  order       Int      @default(0)
+  youtube     String?
+  instagram   String?
+  twitch      String?
+  discord     String?
+  x           String?
+  games       Game[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TeamMember {
+  id         String   @id @default(cuid())
+  photoUrl   String?
+  inGameName String
+  realName   String
+  role       String
+  order      Int      @default(0)
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Sponsor {
+  id          String   @id @default(cuid())
+  logoUrl     String?
+  name        String
+  tier        String
+  description String?
+  subtitle    String? // short tagline for the expandable partner-details panel, e.g. "// Leveling Up Indian Gaming"
+  perks       String[] @default([]) // bullet points shown in the expandable panel
+  link        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CareerOpening {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  department  String
+  applyLink   String?
+  isOpen      Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id             String   @id @default(cuid())
+  twitterUrl     String?
+  instagramUrl   String?
+  youtubeUrl     String?
+  twitchUrl      String?
+  discordInvite  String?
+  statGames      String   @default("0")
+  statCreators   String   @default("0")
+  statCommunity  String   @default("0")
+  statHoursLive  String   @default("0")
+  statSponsors   String   @default("0")
+  updatedAt      DateTime @updatedAt
+}
