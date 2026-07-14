@@ -2,11 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client"
-  output        = "../src/generated/prisma"
-  // "native" covers local dev (Windows); "rhel-openssl-3.0.x" is required
-  // for Vercel's Linux serverless runtime — without it the query engine
-  // binary for that platform never gets generated or deployed.
+  // Classic generator, default output (node_modules/@prisma/client).
+  // The newer "prisma-client" generator with a custom output path outside
+  // node_modules doesn't get the same battle-tested handling from Next.js's
+  // serverless bundler — its native query engine binary kept getting
+  // silently dropped from the deployed function on Vercel even with
+  // outputFileTracingIncludes set. This location is the well-proven path.
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 

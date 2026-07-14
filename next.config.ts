@@ -3,13 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   devIndicators: false,
-  // Prisma's query engine is a native binary loaded from a computed path at
-  // runtime, so Next's build-time file tracer can't statically see it as a
-  // dependency and drops it from the deployed serverless function bundle —
-  // this forces it to be included regardless.
-  outputFileTracingIncludes: {
-    "/**/*": ["./src/generated/prisma/**/*"],
-  },
   images: {
     remotePatterns: [{ protocol: "https", hostname: "*.supabase.co" }],
     // Sponsor logos may be SVG (e.g. generated placeholder marks). Next blocks

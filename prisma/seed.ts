@@ -3,7 +3,7 @@ config({ path: ".env" });
 config({ path: ".env.local", override: true });
 
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
