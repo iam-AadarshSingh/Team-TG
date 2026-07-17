@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { submitContact, type ContactState } from "@/app/actions/contact";
-import { IconAlert, IconCheck, IconMail, IconMessage, IconTag, IconUser } from "@/components/icons/ui";
+import { IconAlert, IconCheck, IconMail, IconMessage, IconPhone, IconTag, IconUser } from "@/components/icons/ui";
 
 const initialState: ContactState = { status: "idle", message: "" };
 
@@ -54,6 +54,11 @@ export function ContactForm() {
           <IconMail className={iconClass} />
           <input name="email" type="email" placeholder="Email Address" required className={fieldClass} />
         </div>
+      </div>
+
+      <div className={fieldWrapClass}>
+        <IconPhone className={iconClass} />
+        <input name="phone" type="tel" placeholder="Phone Number (optional)" className={fieldClass} />
       </div>
 
       <div className={fieldWrapClass}>

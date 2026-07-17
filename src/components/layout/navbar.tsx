@@ -11,7 +11,7 @@ const LINKS = [
   { href: "/games", label: "Games" },
   { href: "/creators", label: "Creators" },
   { href: "/about", label: "About" },
-  { href: "/sponsors", label: "Sponsors" },
+  { href: "/sponsors", label: "Trusted By" },
   { href: "/contact", label: "Contact" },
   { href: "/career", label: "Career" },
 ];

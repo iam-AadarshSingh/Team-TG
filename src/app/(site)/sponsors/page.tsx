@@ -5,17 +5,17 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { PerspectiveMarquee } from "@/components/ui/perspective-marquee";
 import { SponsorCard } from "@/components/sponsors/sponsor-card";
 
-export const metadata = { title: "Sponsors — Team TG" };
+export const metadata = { title: "Trusted By — Team TG" };
 
 export default async function SponsorsPage() {
   const sponsors = await getSponsors();
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-24">
-      <PageHeader eyebrow="// Our Partners" title="Sponsors" />
+      <PageHeader eyebrow="// Our Partners" title="Trusted By" />
 
       {sponsors.length === 0 ? (
-        <p className="mt-10 text-muted">No sponsors listed yet.</p>
+        <p className="mt-10 text-muted">No partners listed yet.</p>
       ) : (
         <>
           <Reveal delay={0.1}>

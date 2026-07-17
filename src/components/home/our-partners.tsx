@@ -12,7 +12,7 @@ export function OurPartners({ sponsors }: { sponsors: Sponsor[] }) {
       <Reveal className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-accent">// Our Partners</p>
-          <h2 className="mt-2 font-display text-4xl uppercase tracking-wide sm:text-5xl">Our Sponsors</h2>
+          <h2 className="mt-2 font-display text-4xl uppercase tracking-wide sm:text-5xl">Trusted By</h2>
         </div>
         <Link
           href="/sponsors"

@@ -17,6 +17,10 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+// Cache rendered site pages instead of re-querying the DB on every nav;
+// admin edits still show up immediately via revalidatePath in the actions.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "TEAM TG — Dominate · Unite · Conquer",
   description:

@@ -1,12 +1,14 @@
 "use server";
 
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { resend } from "@/lib/resend";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is too short").max(100),
   email: z.string().trim().email("Enter a valid email"),
+  phone: z.string().trim().max(30).optional(),
   subject: z.string().trim().min(3, "Subject is too short").max(150),
   message: z.string().trim().min(10, "Message is too short").max(5000),
 });
@@ -20,6 +22,7 @@ export async function submitContact(_prevState: ContactState, formData: FormData
   const parsed = schema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
+    phone: formData.get("phone") || undefined,
     subject: formData.get("subject"),
     message: formData.get("message"),
   });
@@ -28,9 +31,9 @@ export async function submitContact(_prevState: ContactState, formData: FormData
     return { status: "error", message: parsed.error.issues[0]?.message ?? "Please check the form." };
   }
 
-  const { name, email, subject, message } = parsed.data;
+  const { name, email, phone, subject, message } = parsed.data;
 
-  await prisma.contactSubmission.create({ data: { name, email, subject, message } });
+  await prisma.contactSubmission.create({ data: { name, email, phone, subject, message } });
 
   const toEmail = process.env.CONTACT_TO_EMAIL;
   if (toEmail && process.env.RESEND_API_KEY) {
@@ -40,7 +43,7 @@ export async function submitContact(_prevState: ContactState, formData: FormData
         to: toEmail,
         replyTo: email,
         subject: `[Contact] ${subject}`,
-        text: `From: ${name} <${email}>\n\n${message}`,
+        text: `From: ${name} <${email}>${phone ? ` (${phone})` : ""}\n\n${message}`,
       });
     } catch {
       // The submission is already saved — email delivery failing shouldn't fail the form.
@@ -48,4 +51,9 @@ export async function submitContact(_prevState: ContactState, formData: FormData
   }
 
   return { status: "success", message: "Message sent — we'll get back to you soon." };
+}
+
+export async function deleteContactSubmission(id: string) {
+  await prisma.contactSubmission.delete({ where: { id } });
+  revalidatePath("/admin/submissions");
 }

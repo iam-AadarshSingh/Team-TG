@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
   { href: "/career", label: "Career" },
+  { href: "/admin", label: "Admin Panel" },
 ];
 
 export async function Footer() {

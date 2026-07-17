@@ -18,7 +18,7 @@ export default async function Home() {
     { label: "Creators", value: settings.statCreators },
     { label: "Community", value: settings.statCommunity },
     { label: "Hours Live", value: settings.statHoursLive },
-    { label: "Sponsors", value: String(sponsors.length) },
+    { label: "Trusted By", value: String(sponsors.length) },
   ];
 
   return (
